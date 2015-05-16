@@ -10,6 +10,7 @@ trait ReadOnly {
   def fullName: String = underlying getFullName
   def find(doc: DBObject): DBCursor = underlying find doc
   def findOne: DBObject = underlying findOne
+  def findOne(doc: DBObject) = underlying findOne doc
   def getCount(doc: DBObject): Long = underlying getCount doc
 }
 
