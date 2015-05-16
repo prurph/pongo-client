@@ -1,7 +1,6 @@
 package com.scalainaction.mongo
 
-import com.mongodb.{DBCollection => MongoDBCollection}
-import com.mongodb.DBObject
+import com.mongodb.{DBCollection => MongoDBCollection, DBCursor, DBObject}
 
 trait ReadOnly {
 
@@ -9,7 +8,7 @@ trait ReadOnly {
 
   def name: String = underlying getName
   def fullName: String = underlying getFullName
-  def find(doc: DBObject): DBObject = underlying findOne doc
+  def find(doc: DBObject): DBCursor = underlying find doc
   def findOne: DBObject = underlying findOne
   def getCount(doc: DBObject): Long = underlying getCount doc
 }
