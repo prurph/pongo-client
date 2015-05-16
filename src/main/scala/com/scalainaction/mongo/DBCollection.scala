@@ -8,6 +8,18 @@ trait ReadOnly {
 
   def name: String = underlying getName
   def fullName: String = underlying getFullName
+
+  def find(query: Query): DBCursor = {
+    def applyOptions(cursor: DBCursor, option: QueryOption): DBCursor = {
+      option match {
+        case Skip(skip, next) => applyOptions(cursor.skip(skip), next)
+        case Sort(sorting, next) => applyOptions(cursor.sort(sorting), next)
+        case Limit(limit, next) => applyOptions(cursor.limit(limit), next)
+        case NoOption => cursor
+      }
+    }
+    applyOptions(find(query.q), query.option)
+  }
   def find(doc: DBObject): DBCursor = underlying find doc
   def findOne: DBObject = underlying findOne
   def findOne(doc: DBObject) = underlying findOne doc
